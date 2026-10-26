@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Calendario con festività italiane, appuntamenti e note a checklist. Tutto salvato sul tuo telefono.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f4f2fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#12111a" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Agenda">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'; manifest-src 'self'; worker-src 'self'">
+  <title>Agenda Personale</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-calendar" viewBox="0 0 24 24">
+      <path d="M7 3v3M17 3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/>
+      <path d="M8 13h2M14 13h2M8 17h2"/>
+    </symbol>
+    <symbol id="i-notes" viewBox="0 0 24 24">
+      <path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/>
+      <path d="M8 8h8M8 12h8M8 16h5"/>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24">
+      <rect x="5" y="10" width="14" height="11" rx="2"/>
+      <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/>
+    </symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24">
+      <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/>
+      <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.09A1.7 1.7 0 0 0 8.95 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.58 15a1.7 1.7 0 0 0-1.56-1.03H3v-4h.09A1.7 1.7 0 0 0 4.6 8.95a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 8.97 4.6 1.7 1.7 0 0 0 10 3.04V3h4v.09a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.15.63.7 1.04 1.56 1.04H21v4h-.09A1.7 1.7 0 0 0 19.4 15Z"/>
+    </symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24">
+      <path d="m4 16-.5 4.5L8 20l11-11-4-4L4 16ZM13 7l4 4"/>
+    </symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24">
+      <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24">
+      <path d="M12 3 4.5 6v5.5c0 4.6 3.2 8 7.5 9.5 4.3-1.5 7.5-4.9 7.5-9.5V6L12 3Z"/><path d="m9 12 2 2 4-4"/>
+    </symbol>
+    <symbol id="i-download" viewBox="0 0 24 24">
+      <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 19h16"/>
+    </symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24">
+      <path d="M12 16V4m0 0 4 4m-4-4L8 8M4 20h16"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  </svg>
+
+  <section id="bootScreen" class="screen screen--center" aria-label="Caricamento">
+    <div class="auth-card auth-card--compact">
+      <img class="auth-logo" src="icons/icon-192.png" alt="" width="76" height="76">
+      <h1>Agenda Personale</h1>
+      <p class="muted">Apertura in corso…</p>
+    </div>
+  </section>
+
+  <section id="setupScreen" class="screen screen--center" hidden>
+    <main class="auth-card">
+      <img class="auth-logo" src="icons/icon-192.png" alt="" width="76" height="76">
+      <p class="eyebrow">Benvenuto</p>
+      <h1>Crea il tuo PIN</h1>
+      <p class="muted auth-intro">Calendario e note restano sul telefono. Il PIN protegge l'accesso all'app.</p>
+
+      <p id="secureWarning" class="form-error" hidden>Per usare l'app apri questa pagina tramite HTTPS o localhost. Il PIN richiede una connessione sicura.</p>
+
+      <form id="setupForm" novalidate>
+        <label class="field">
+          <span>PIN <small>da 4 a 8 cifre</small></span>
+          <input id="setupPin" type="password" inputmode="numeric" autocomplete="new-password" pattern="[0-9]{4,8}" maxlength="8" required>
+        </label>
+        <label class="field">
+          <span>Conferma PIN</span>
+          <input id="setupPinConfirm" type="password" inputmode="numeric" autocomplete="new-password" pattern="[0-9]{4,8}" maxlength="8" required>
+        </label>
+        <p id="setupError" class="form-error" role="alert"></p>
+        <button class="btn btn-primary btn-block" type="submit">
+          <svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg>
+          Proteggi l'agenda
+        </button>
+      </form>
+
+      <p class="privacy-note">
+        <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+        <span>Nessun dato viene inviato in rete. Tutto viene salvato automaticamente su questo dispositivo.</span>
+      </p>
+    </main>
+  </section>
+
+  <section id="lockScreen" class="screen screen--center" hidden>
+    <main class="auth-card auth-card--lock">
+      <img class="auth-logo" src="icons/icon-192.png" alt="" width="76" height="76">
+      <p id="lockDate" class="eyebrow"></p>
+      <h1>Agenda bloccata</h1>
+      <p class="muted auth-intro">Inserisci il PIN per continuare.</p>
+
+      <form id="unlockForm" novalidate>
+        <label class="field">
+          <span>PIN</span>
+          <input id="unlockPin" type="password" inputmode="numeric" autocomplete="current-password" pattern="[0-9]{4,8}" maxlength="8" required autofocus>
+        </label>
+        <p id="unlockError" class="form-error" role="alert"></p>
+        <button class="btn btn-primary btn-block" type="submit">
+          <svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg>
+          Sblocca
+        </button>
+      </form>
+
+      <button id="forgotPinBtn" class="link-btn" type="button">PIN dimenticato?</button>
+      <p id="forgotInfo" class="hint-box" hidden>Per ripristinare l'accesso devi eliminare i dati del sito dalle impostazioni del browser. Appuntamenti e note andranno persi.</p>
+    </main>
+  </section>
+
+  <div id="appShell" class="app-shell" hidden>
+    <header class="appbar">
+      <div class="brand">
+        <img src="icons/icon-192.png" alt="" width="34" height="34">
+        <span>Agenda</span>
+      </div>
+      <div class="appbar-actions">
+        <button id="settingsBtn" class="icon-btn" type="button" aria-label="Impostazioni">
+          <svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg>
+        </button>
+        <button id="lockBtn" class="icon-btn" type="button" aria-label="Blocca l'agenda">
+          <svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section id="calendarScreen" class="view calendar-view" role="tabpanel" aria-labelledby="calendarTab">
+        <div class="month-nav">
+          <button id="prevMonthBtn" class="icon-btn" type="button" aria-label="Mese precedente">
+            <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg>
+          </button>
+          <h1 id="monthLabel" class="month-label" aria-live="polite"></h1>
+          <button id="nextMonthBtn" class="icon-btn" type="button" aria-label="Mese successivo">
+            <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg>
+          </button>
+          <button id="todayBtn" class="btn btn-ghost btn-small today-btn" type="button">Oggi</button>
+        </div>
+
+        <div class="calendar-card">
+          <div class="weekdays" aria-hidden="true">
+            <span>Lun</span><span>Mar</span><span>Mer</span><span>Gio</span><span>Ven</span><span>Sab</span><span>Dom</span>
+          </div>
+          <div id="calendarGrid" class="calendar-grid" role="grid" aria-labelledby="monthLabel"></div>
+          <div class="calendar-legend" aria-hidden="true">
+            <span><i class="legend-dot legend-dot--holiday"></i>Festività</span>
+            <span><i class="legend-dot legend-dot--appointment"></i>Appuntamento</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="notesScreen" class="view notes-view" role="tabpanel" aria-labelledby="notesTab" hidden>
+        <div class="notes-toolbar">
+          <div id="pageTabs" class="page-tabs" role="tablist" aria-label="Pagine delle note"></div>
+          <button id="addPageBtn" class="icon-btn add-page-btn" type="button" aria-label="Aggiungi pagina">
+            <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
+          </button>
+        </div>
+
+        <div id="noPagesState" class="empty-pages" hidden>
+          <div class="empty-icon" aria-hidden="true">
+            <svg class="icon"><use href="#i-notes"></use></svg>
+          </div>
+          <h2>Nessuna pagina</h2>
+          <p>Crea una pagina per iniziare a scrivere le tue note.</p>
+          <button id="createFirstPageBtn" class="btn btn-primary" type="button">Crea pagina</button>
+        </div>
+
+        <section id="notePagePanel" class="note-page-panel" aria-labelledby="activePageTitle">
+          <div class="note-page-head">
+            <div>
+              <p id="pageCounter" class="eyebrow"></p>
+              <h2 id="activePageTitle"></h2>
+            </div>
+            <div class="note-page-actions">
+              <span id="pageProgress" class="progress-pill"></span>
+              <button id="deletePageBtn" class="icon-btn icon-btn--danger" type="button" aria-label="Elimina pagina">
+                <svg class="icon" aria-hidden="true"><use href="#i-trash"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <form id="addNoteForm" class="add-note-form" novalidate>
+            <span class="checkbox-placeholder" aria-hidden="true"></span>
+            <input id="newNoteText" type="text" maxlength="500" autocomplete="off" placeholder="Scrivi una nota…" aria-label="Testo della nuova nota">
+            <button id="addNoteBtn" class="add-note-btn" type="submit" aria-label="Aggiungi nota">
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
+            </button>
+          </form>
+
+          <div id="noteList" class="note-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" role="tablist" aria-label="Sezioni dell'app">
+      <button id="calendarTab" class="nav-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="calendarScreen">
+        <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
+        <span>Calendario</span>
+      </button>
+      <button id="notesTab" class="nav-tab" type="button" role="tab" aria-selected="false" aria-controls="notesScreen">
+        <svg class="icon" aria-hidden="true"><use href="#i-notes"></use></svg>
+        <span>Note</span>
+      </button>
+    </nav>
+  </div>
+
+  <dialog id="dayDialog" class="dialog">
+    <div class="dialog-head">
+      <div>
+        <p id="dayRelative" class="eyebrow"></p>
+        <h2 id="dayTitle"></h2>
+        <span id="dayHoliday" class="holiday-badge" hidden></span>
+      </div>
+      <button class="icon-btn" type="button" data-close-dialog="dayDialog" aria-label="Chiudi">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <div id="dayList" class="day-list"></div>
+    <button id="addAppointmentForDay" class="btn btn-primary btn-block" type="button">
+      <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
+      Nuovo appuntamento
+    </button>
+  </dialog>
+
+  <dialog id="appointmentDialog" class="dialog">
+    <form id="appointmentForm" novalidate>
+      <div class="dialog-head">
+        <div>
+          <p id="appointmentDateLabel" class="eyebrow"></p>
+          <h2 id="appointmentDialogTitle">Nuovo appuntamento</h2>
+        </div>
+        <button class="icon-btn" type="button" data-close-dialog="appointmentDialog" aria-label="Chiudi">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+
+      <input id="appointmentId" type="hidden">
+      <input id="appointmentDate" type="hidden">
+
+      <label class="field">
+        <span>Ora</span>
+        <input id="appointmentTime" type="time" required>
+      </label>
+      <label class="field">
+        <span>Descrizione</span>
+        <textarea id="appointmentDescription" rows="3" maxlength="500" placeholder="Descrivi l'appuntamento" required></textarea>
+      </label>
+      <p id="appointmentError" class="form-error" role="alert"></p>
+
+      <div class="dialog-actions dialog-actions--spread">
+        <button id="deleteAppointmentBtn" class="btn btn-danger-ghost" type="button" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-trash"></use></svg>
+          Elimina
+        </button>
+        <div class="action-group">
+          <button class="btn btn-ghost" type="button" data-close-dialog="appointmentDialog">Annulla</button>
+          <button id="saveAppointmentBtn" class="btn btn-primary" type="submit">Salva</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="noteDialog" class="dialog">
+    <form id="noteForm" novalidate>
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">Nota</p>
+          <h2>Modifica nota</h2>
+        </div>
+        <button class="icon-btn" type="button" data-close-dialog="noteDialog" aria-label="Chiudi">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+      <label class="field">
+        <span>Testo</span>
+        <textarea id="noteText" rows="4" maxlength="500" required></textarea>
+      </label>
+      <p id="noteError" class="form-error" role="alert"></p>
+      <div class="dialog-actions dialog-actions--spread">
+        <button id="deleteNoteBtn" class="btn btn-danger-ghost" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#i-trash"></use></svg>
+          Elimina
+        </button>
+        <div class="action-group">
+          <button class="btn btn-ghost" type="button" data-close-dialog="noteDialog">Annulla</button>
+          <button id="saveNoteBtn" class="btn btn-primary" type="submit">Salva</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog" class="dialog">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Agenda Personale</p>
+        <h2>Impostazioni</h2>
+      </div>
+      <button class="icon-btn" type="button" data-close-dialog="settingsDialog" aria-label="Chiudi">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+
+    <section class="settings-section">
+      <div class="settings-section-head">
+        <div>
+          <h3>Sicurezza</h3>
+          <p class="muted">PIN richiesto a ogni apertura</p>
+        </div>
+        <button id="toggleChangePinBtn" class="btn btn-ghost btn-small" type="button">Cambia PIN</button>
+      </div>
+      <form id="changePinForm" class="settings-form" hidden novalidate>
+        <label class="field">
+          <span>PIN attuale</span>
+          <input id="currentPin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="8" required>
+        </label>
+        <div class="form-grid">
+          <label class="field">
+            <span>Nuovo PIN</span>
+            <input id="newPin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8" required>
+          </label>
+          <label class="field">
+            <span>Conferma nuovo PIN</span>
+            <input id="newPinConfirm" type="password" inputmode="numeric" autocomplete="new-password" maxlength="8" required>
+          </label>
+        </div>
+        <p id="changePinError" class="form-error" role="alert"></p>
+        <div class="inline-actions">
+          <button id="cancelChangePinBtn" class="btn btn-ghost btn-small" type="button">Annulla</button>
+          <button class="btn btn-primary btn-small" type="submit">Aggiorna PIN</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="settings-section">
+      <h3>Backup</h3>
+      <p class="settings-help">I dati sono salvati solo in questo browser. Esporta un backup prima di cambiare telefono o cancellare i dati del sito. Il file non è cifrato: conservalo in un luogo sicuro.</p>
+      <div class="button-row">
+        <button id="exportBtn" class="btn btn-ghost btn-small" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
+          Esporta
+        </button>
+        <button id="importBtn" class="btn btn-ghost btn-small" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#i-upload"></use></svg>
+          Importa
+        </button>
+        <input id="importFile" type="file" accept="application/json,.json" hidden>
+      </div>
+      <button id="installAppBtn" class="btn btn-ghost btn-small install-spaced" type="button" hidden>
+        <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>
+        Installa sul telefono
+      </button>
+      <button id="deleteAllBtn" class="btn btn-danger-ghost btn-small danger-spaced" type="button">
+        <svg class="icon" aria-hidden="true"><use href="#i-trash"></use></svg>
+        Elimina appuntamenti e note
+      </button>
+    </section>
+
+    <p class="privacy-note privacy-note--settings">
+      <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
+      <span>Nessun account e nessun server. Il PIN protegge l'accesso all'app, ma non cifra il database del browser.</span>
+    </p>
+  </dialog>
+
+  <dialog id="confirmDialog" class="dialog dialog--small">
+    <div class="dialog-head">
+      <h2 id="confirmTitle">Confermi?</h2>
+      <button class="icon-btn" type="button" data-close-dialog="confirmDialog" aria-label="Chiudi">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+    <p id="confirmMessage" class="confirm-message"></p>
+    <div class="dialog-actions">
+      <button id="confirmCancelBtn" class="btn btn-ghost" type="button">Annulla</button>
+      <button id="confirmActionBtn" class="btn btn-danger" type="button">Conferma</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
