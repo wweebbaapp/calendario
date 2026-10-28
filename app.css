@@ -432,13 +432,14 @@ h3 {
   font-size: .81rem;
 }
 
-.app-shell {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  min-height: 100dvh;
-  animation: fade .22s ease both;
-}
+  .app-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: 100svh;
+    animation: fade .22s ease both;
+  }
 
 .appbar {
   display: flex;
@@ -470,12 +471,14 @@ h3 {
   gap: 2px;
 }
 
-.app-main {
-  flex: 1;
-  width: min(100%, 720px);
-  margin: 0 auto;
-  padding: 4px 12px calc(88px + var(--safe-bottom));
-}
+  .app-main {
+    flex: 1 1 auto;
+    width: min(100%, 720px);
+    margin: 0 auto;
+    padding: 4px 12px calc(88px + var(--safe-bottom));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
 .view {
   animation: fade .18s ease both;
@@ -747,16 +750,21 @@ h3 {
   display: none;
 }
 
-.add-note-form {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 5px 5px 5px 12px;
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  background: var(--surface-soft);
-  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
-}
+  .add-note-form {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 5px 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: var(--surface-soft);
+    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 
 .add-note-form:focus-within {
   border-color: var(--primary);
@@ -917,21 +925,27 @@ h3 {
   font-size: .87rem;
 }
 
-.bottom-nav {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 20;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 12px calc(8px + var(--safe-bottom));
-  border-top: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
+  .bottom-nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px calc(8px + var(--safe-bottom));
+    border-top: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  @supports (height: 100dvh) {
+    .app-shell {
+      min-height: 100dvh;
+    }
+  }
 
 .nav-tab {
   display: flex;
@@ -1225,11 +1239,17 @@ h3 {
   }
 }
 
-@media (max-width: 600px) {
-  .app-main {
-    padding-right: 10px;
-    padding-left: 10px;
-  }
+  @media (max-width: 600px) {
+    .app-main {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+
+    .note-page-panel {
+      max-height: calc(100dvh - 170px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
 
   .appbar {
     padding-right: 9px;
